@@ -116,4 +116,10 @@ app.post('/api/ai/face-emotion', upload.single('image'), async (req, res) => {
 });
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`[2TOCH backend] en écoute sur http://localhost:${PORT}`));
+
+const http = require('http');
+const { attachSignalingServer } = require('./signaling-server');
+
+const server = http.createServer(app);
+attachSignalingServer(server);
+server.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
